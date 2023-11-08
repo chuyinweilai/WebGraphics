@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  background-color: #FFF;
+  padding: 10px 20px;
+
+}
+.App > button {
+  border: none;
+  box-shadow: 0 0 8px #333;
+  padding: 4px 6px;
+  margin: 0 10px;
+}
