@@ -29,15 +29,15 @@ import ReactDOM from 'react-dom/client'
 // import Lesson from './Basic/13';
 // 点光源
 // import Lesson from './Basic/15';
+// 模块分割
+import Lesson from './Basic/16';
 
 // 项目实战
 // 贺卡
 // import Lesson from './Project/heKa';
 // MMD
-import Lesson from './Project/MMD';
+// import Lesson from './Project/MMD';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Lesson />
-  </React.StrictMode>,
+  <Lesson />
 )

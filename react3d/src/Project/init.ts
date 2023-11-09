@@ -29,8 +29,11 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 const controls = new OrbitControls(camera, renderer.domElement);
 // 创建坐标辅助器
 const axesHelper = new THREE.AxesHelper(20);
+// 创建坐标格辅助
+const gridHelper = new THREE.GridHelper(10, 10, 0xFFFFFF, 'rgba(100, 100, 100, 0.5)');
 
 scene.add(camera);
+scene.add(gridHelper);
 scene.add(axesHelper);
 
 // 插入标签
