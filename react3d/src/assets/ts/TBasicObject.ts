@@ -23,7 +23,7 @@ const box: Mesh = new Mesh(
 )
 box.position.y = 10;
 
-export default {
+export {
   stage,
   box
 }

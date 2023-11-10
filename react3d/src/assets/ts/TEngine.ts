@@ -1,6 +1,4 @@
 import { 
-  AxesHelper,
-  GridHelper,
   MOUSE,
   Object3D,
   PerspectiveCamera,
@@ -40,12 +38,6 @@ export class TEngine {
     this.renderer.setClearColor(0x444444);
     // 清空画布
     this.renderer.clearColor();
-    
-    const axesHelper: AxesHelper = new AxesHelper(500);
-    const gridHelper: GridHelper = new GridHelper(500, 10, 0x39c5bb, 0x999999) 
-    
-    this.scene.add(axesHelper);
-    this.scene.add(gridHelper);
 
     // 初始化性能监视器
     const stats = new Stats(); 

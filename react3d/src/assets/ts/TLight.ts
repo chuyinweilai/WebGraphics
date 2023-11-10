@@ -4,11 +4,10 @@ import { AmbientLight, PointLight } from "three";
 const ambientLight: AmbientLight = new AmbientLight(0xFFFFFF, 0.3);
 
 // 点光源
-const pointLight: PointLight = new PointLight(0xFFFFFF, 0.7, 200, 0.1);
+const pointLight: PointLight = new PointLight(0xFF00FF, 0.7, 100, 0.3);
 pointLight.position.set(20, 20, 20);
-// pointLight.lookAt(0, 0, 0);
 
-export default {
+export {
   ambientLight,
   pointLight
 }
