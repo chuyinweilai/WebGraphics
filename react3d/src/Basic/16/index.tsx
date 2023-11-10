@@ -3,11 +3,11 @@
  *  */ 
 
 import {useEffect, useRef} from 'react';
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
-import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js';
 
-import './index.css';
 import { TEngine } from '../../assets/TEngine';
+import TBasicObjectList from '../../assets/TBasicObject';
+import TLightList from '../../assets/TLight';
+import './index.css';
 
 const App = () => {
 	const threeCanvas = useRef(null);
@@ -15,6 +15,8 @@ const App = () => {
 
 	useEffect(() => {
 		TE.current = new TEngine(threeCanvas.current!);
+		TE.current.addObject(...Object.values(TBasicObjectList));
+		TE.current.addObject(...Object.values(TLightList));
 	}, [])
 
 

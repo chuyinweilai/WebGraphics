@@ -1,11 +1,8 @@
 import { 
-  AmbientLight,
   AxesHelper,
-  BoxGeometry,
   GridHelper,
   MOUSE,
-  Mesh,
-  MeshStandardMaterial,
+  Object3D,
   PerspectiveCamera,
   Scene,
   Vector3,
@@ -22,7 +19,10 @@ export class TEngine {
 
   constructor(dom: HTMLElement) {
     this.dom = dom;
-    this.renderer = new WebGLRenderer();
+    this.renderer = new WebGLRenderer({
+      // 打开抗锯齿
+      antialias: true
+    });
     this.scene = new Scene();
     this.camera = new PerspectiveCamera(
       45,
@@ -30,7 +30,7 @@ export class TEngine {
       0.1,
       1000
     )
-    this.camera.position.set(40, 40, 40);
+    this.camera.position.set(100, 100, 100);
     this.camera.lookAt(new Vector3(0, 0, 0));
     // 正朝向，这里设定为y轴
     this.camera.up = new Vector3(0, 1, 0)
@@ -41,24 +41,9 @@ export class TEngine {
     // 清空画布
     this.renderer.clearColor();
     
-
-    const box: Mesh = new Mesh(
-      new BoxGeometry(10, 10, 10),
-      new MeshStandardMaterial({
-        color: 0xFF0000
-      })
-    )
-    box.position.set(0, 0, 0);
-
-
-    // 环境光
-    const ambientLight: AmbientLight = new AmbientLight(0xFFFFFF, 1);
-
     const axesHelper: AxesHelper = new AxesHelper(500);
     const gridHelper: GridHelper = new GridHelper(500, 10, 0x39c5bb, 0x999999) 
     
-    this.scene.add(box);
-    this.scene.add(ambientLight);
     this.scene.add(axesHelper);
     this.scene.add(gridHelper);
 
@@ -70,7 +55,7 @@ export class TEngine {
 
     // 初始轨道控制器
     const orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
-    orbitControls.autoRotate = true;
+    // orbitControls.autoRotate = true;
     orbitControls.mouseButtons = {
       'LEFT': null,
       'MIDDLE': MOUSE.DOLLY,
@@ -89,5 +74,11 @@ export class TEngine {
     this.dom.appendChild(this.renderer.domElement);
     this.dom.appendChild(statsDom);
 
+  }
+  
+  // Object3D 为 threejs 的基础类
+  addObject(...object: Object3D[]) {
+    console.log('object',object)
+    object.forEach(ele => this.scene.add(ele))
   }
 }
