@@ -1,3 +1,4 @@
+// Canvas
 export class TCanvasTextureEditor {
   private canvas: HTMLCanvasElement;
 

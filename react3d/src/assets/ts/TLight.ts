@@ -1,3 +1,4 @@
+// 灯光文件
 import { AmbientLight, PointLight } from "three";
 
 // 环境光

@@ -19,7 +19,6 @@ const App = () => {
 		TE.current.addObject(...Object.values(TBasicObjectList));
 		TE.current.addObject(...Object.values(TLightList));
 		TE.current.addObject(...Object.values(THelperList));
-		
 	}, [])
 
 
