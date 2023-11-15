@@ -5,40 +5,69 @@ import { pictureTexture } from './TTextures';
 const size = 10;
 // 类数组类型
 const points: Float32Array = new Float32Array([
+  // 正面
   -size, size, size,
   size, size, size,
   size, size, -size,
   -size, size, -size,
-
-  -size, -size, size,
+  // 背面
   size, -size, size,
+  -size, -size, size,
+  -size, -size, -size,
+  size, -size, -size,
+
+  -size, size, size,
+  -size, size, -size,
+  -size, -size, -size,
+  -size, -size, size,
+
+  size, size, size,
+  size, size, -size,
+  size, -size, -size,
+  size, -size, size,
+
+  -size, size, size,
+  size, size, size,
+  size, -size, size,
+  -size, -size, size,
+
+  -size, size, -size,
+  size, size, -size,
   size, -size, -size,
   -size, -size, -size,
 ])
 
-// 顶点索引数组
-// 模型正面，参考安培定则，四指朝向三角形三个点的顺序，拇指朝向为正面
-const index: number[] = [
- 0, 1, 2,
- 2, 3, 0,
+const normals: Float32Array = new Float32Array([
+  0, 1, 0,
+  0, 1, 0,
+  0, 1, 0,
+  0, 1, 0,
 
- 0, 4, 5,
- 5, 1, 0,
- 
- 5, 6, 1,
- 6, 2, 1,
+  0, -1, 0,
+  0, -1, 0,
+  0, -1, 0,
+  0, -1, 0,
 
- 6, 7, 2,
- 7, 3, 2,
- 
- 7, 4, 3,
- 4, 0, 3,
+  -1, 0, 0,
+  -1, 0, 0,
+  -1, 0, 0,
+  -1, 0, 0,
 
- 4, 6, 5,
- 4, 7, 6
-]
+  1, 0, 0,
+  1, 0, 0,
+  1, 0, 0,
+  1, 0, 0,
 
-// 
+  0, 0, 1,
+  0, 0, 1,
+  0, 0, 1,
+  0, 0, 1,
+
+  0, 0, -1,
+  0, 0, -1,
+  0, 0, -1,
+  0, 0, -1,
+])
 const uv: Float32Array = new Float32Array([
   0, 0,
   1, 0,
@@ -49,8 +78,50 @@ const uv: Float32Array = new Float32Array([
   1, 0,
   1, 1,
   0, 1,
+
+  0, 0,
+  1, 0,
+  1, 1,
+  0, 1,
+
+  0, 0,
+  1, 0,
+  1, 1,
+  0, 1,
+
+  0, 0,
+  1, 0,
+  1, 1,
+  0, 1,
+
+  0, 0,
+  1, 0,
+  1, 1,
+  0, 1,
 ])
 
+
+// 顶点索引数组
+// 模型正面，参考安培定则，四指朝向三角形三个点的顺序，拇指朝向为正面
+const index: number[] = [
+  0, 1, 2,
+  2, 3, 0,
+ 
+  4, 5, 6,
+  6, 7, 4,
+  
+  8, 9, 10,
+  10, 11, 8,
+ 
+  12, 14, 13,
+  14, 12, 15,
+  
+  16, 18, 17,
+  18, 16, 19,
+  
+  20, 21, 22,
+  22, 23, 20,
+ ]
 const geometry: BufferGeometry = new BufferGeometry();
 
 // 为当前几何体设置一个 attribute 属性,position 顶点信息，normal 法向信息
@@ -59,7 +130,7 @@ const geometry: BufferGeometry = new BufferGeometry();
 // 如果不是刚好整数倍的三角形的话，会舍弃多余的点
 geometry.setAttribute('position', new BufferAttribute(points, 3));
 // 法向信息
-geometry.setAttribute('normal', new BufferAttribute(points, 3));
+geometry.setAttribute('normal', new BufferAttribute(normals, 3));
 // 设置 UV 坐标, 纹理上的坐标系, u为x轴，v为y周
 geometry.setAttribute('uv', new BufferAttribute(uv, 2));
 // 设置缓存的
@@ -73,7 +144,7 @@ const material: MeshStandardMaterial = new MeshStandardMaterial({
 });
 
 const codeBox: Mesh = new Mesh(geometry, material);
-codeBox.position.set(-20, 20, 20);
+codeBox.position.set(-20, 10, 0);
 codeBox.rotateX(Math.PI / 180 * 90);
 const vertexHelper = new VertexNormalsHelper(codeBox, 10, 0x00FF00);
 
