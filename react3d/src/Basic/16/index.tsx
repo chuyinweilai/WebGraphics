@@ -8,6 +8,7 @@ import { TEngine } from '../../assets/ts/TEngine';
 import * as TBasicObjectList from '../../assets/ts/TBasicObject';
 import * as TLightList from '../../assets/ts/TLight';
 import * as THelperList from '../../assets/ts/THelper';
+import * as TCodeModel from '../../assets/ts/TCodeModel';
 import './index.css';
 
 const App = () => {
@@ -19,6 +20,8 @@ const App = () => {
 		TE.current.addObject(...Object.values(TBasicObjectList));
 		TE.current.addObject(...Object.values(TLightList));
 		TE.current.addObject(...Object.values(THelperList));
+		TE.current.addObject(...Object.values(TCodeModel));
+		
 	}, [])
 
 

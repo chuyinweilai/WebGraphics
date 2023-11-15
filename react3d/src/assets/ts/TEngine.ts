@@ -40,6 +40,8 @@ export class TEngine {
     this.renderer.setClearColor(0x444444);
     // 清空画布
     this.renderer.clearColor();
+    // 打开阴影
+    this.renderer.shadowMap.enabled = true;
 
     // 初始化性能监视器
     const stats = new Stats(); 
@@ -50,11 +52,11 @@ export class TEngine {
     // 初始轨道控制器
     const orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
     // orbitControls.autoRotate = true;
-    orbitControls.mouseButtons = {
-      'LEFT': null,
-      'MIDDLE': MOUSE.DOLLY,
-      'RIGHT': MOUSE.ROTATE,
-    }
+    // orbitControls.mouseButtons = {
+    //   'LEFT': null,
+    //   'MIDDLE': MOUSE.DOLLY,
+    //   'RIGHT': MOUSE.ROTATE,
+    // }
 
     // 渲染函数
     const animate = () => {
@@ -64,7 +66,9 @@ export class TEngine {
       requestAnimationFrame(animate);
     }
     animate();
-
+    // 清除内容
+    this.dom.innerHTML = '';
+    // 插入内容
     this.dom.appendChild(this.renderer.domElement);
     this.dom.appendChild(statsDom);
 
