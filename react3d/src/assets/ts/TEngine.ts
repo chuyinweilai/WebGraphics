@@ -76,7 +76,6 @@ export class TEngine {
   
   // Object3D 为 threejs 的基础类
   addObject(...object: Object3D[]) {
-    console.log('object',object)
     object.forEach(ele => this.scene.add(ele))
   }
 }
