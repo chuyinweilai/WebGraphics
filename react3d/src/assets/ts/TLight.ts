@@ -1,5 +1,6 @@
 // 灯光文件
 import { AmbientLight, PointLight, SpotLight } from "three";
+import { wall } from "./TBasicObject";
 
 // 环境光
 const ambientLight: AmbientLight = new AmbientLight(0xFFFFFF, 0.3);
@@ -13,16 +14,17 @@ pointLight.castShadow = true; // default false
 const spotLight: SpotLight = new SpotLight(
   0xFFFFFF,
   1,
-  200,
+  500,
   Math.PI / 180 * 30,
   0,
   0
 )
-spotLight.position.set(-70, 80, -70);
+spotLight.target = wall;
+spotLight.position.set(0, 100, 400);
 spotLight.castShadow = true; // default false
 
 export {
   ambientLight,
-  pointLight,
+  // pointLight,
   spotLight
 }

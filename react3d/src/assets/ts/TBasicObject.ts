@@ -6,13 +6,11 @@ import {
   PlaneGeometry,
   MeshBasicMaterial,
 } from 'three';
-// 法线辅助器
-import { VertexNormalsHelper } from 'three/examples/jsm/helpers/VertexNormalsHelper';
 import { pictureTexture } from './TTextures';
 
 // 地面
 const stage: Mesh = new Mesh(
-  new BoxGeometry(200, 10, 200),
+  new BoxGeometry(400, 10, 200),
   new MeshStandardMaterial({
     color: 'rgb(0, 75, 75)',
     roughness: 0
@@ -22,39 +20,40 @@ stage.position.y = -5;
 stage.castShadow = true;
 stage.receiveShadow = true;
 
-// 立方体
-const box: Mesh = new Mesh(
-  new BoxGeometry(20, 20, 20),
-  new MeshStandardMaterial({
-    color: 0xFFFFFF,
-  // 材质与金属的相似度
-    // metalness: 1,
-    // 材质的粗糙程度
-    // roughness: 0.5
-
-  })
-)
-box.position.x = 20;
-box.position.y = 10;
-box.castShadow = true;
-box.receiveShadow = true;
-
-// 相框
-const plan = new Mesh(
+// 图片
+const picture = new Mesh(
   new PlaneGeometry(192, 108),
   new MeshBasicMaterial({
     map: pictureTexture,
   })
 )
+picture.castShadow = true;
+picture.position.set(0, 120, -40);
+picture.scale.set(0.3, 0.3, 0.3);
+
+// 相框
+const plan = new Mesh(
+  new BoxGeometry(210, 120, 30),
+  new MeshBasicMaterial({
+    color: 0x39c5bb
+  })
+)
 plan.castShadow = true;
-plan.position.set(0, 40, 0);
+plan.position.set(0, 120, -50);
 plan.scale.set(0.3, 0.3, 0.3);
 
-const vertexHelper = new VertexNormalsHelper(box, 10, 0x00FF00);
+// 墙面
+const wall = new Mesh(
+  new BoxGeometry(600, 200, 10),
+  new MeshStandardMaterial({
+    color: 0xFFFFFF
+  })
+)
+wall.position.set(0, 100, -100);
 
 export {
   stage,
-  box,
+  picture,
   plan,
-  vertexHelper
+  wall,
 }

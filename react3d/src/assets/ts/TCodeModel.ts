@@ -1,6 +1,5 @@
 import { BufferAttribute, BufferGeometry, Mesh, MeshStandardMaterial } from "three";
 import { VertexNormalsHelper } from 'three/examples/jsm/helpers/VertexNormalsHelper';
-import { pictureTexture } from './TTextures';
 
 const size = 10;
 // 类数组类型
