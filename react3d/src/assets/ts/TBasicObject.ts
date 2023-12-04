@@ -5,6 +5,7 @@ import {
   MeshStandardMaterial,
   PlaneGeometry,
   MeshBasicMaterial,
+  Color,
 } from 'three';
 import { pictureTexture } from './TTextures';
 
@@ -50,6 +51,25 @@ const wall = new Mesh(
   })
 )
 wall.position.set(0, 100, -100);
+wall.updateMatrix();
+wall.updateMatrixWorld();
+
+// wall.addEventListener('click', (event) => {
+//   console.log('wall click', event);
+//   (wall.material as MeshStandardMaterial).color = new Color('#39c5bb');
+// })
+
+// wall.addEventListener('mouseenter', () => {
+//   console.log('wall mouseenter');
+//   (wall.material as MeshStandardMaterial).color = new Color('#39c5bb');
+// })
+// wall.addEventListener('mousemove', () => {
+//   console.log('wall mousemove');
+// })
+// wall.addEventListener('mouseleave', () => {
+//   console.log('wall mouseleave');
+//   (wall.material as MeshStandardMaterial).color = new Color('#FFFFFF');
+// })
 
 export {
   stage,

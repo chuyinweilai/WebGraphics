@@ -25,6 +25,6 @@ spotLight.castShadow = true; // default false
 
 export {
   ambientLight,
-  // pointLight,
+  pointLight,
   spotLight
 }

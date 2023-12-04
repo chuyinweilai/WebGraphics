@@ -1,7 +1,10 @@
 // 主程序
 import { 
   MOUSE,
+  Mesh,
+  MeshStandardMaterial,
   Object3D,
+  Object3DEventMap,
   PerspectiveCamera,
   Raycaster,
   Scene,
@@ -12,14 +15,15 @@ import {
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
+import { IntersectionProps, TEventManager } from "./TEventManager";
 
+let cacheObject: Mesh | null = null;
 export class TEngine {
   private dom: HTMLElement;
-  private vector2: Vector2;
   private renderer: WebGLRenderer;
   private scene: Scene;
   private camera: PerspectiveCamera;
-  private transformControls: TransformControls;
+  private eventManager: TEventManager;
 
   constructor(dom: HTMLElement) {
     this.dom = dom;
@@ -64,43 +68,16 @@ export class TEngine {
 
     // 初始变换控制器
     const transformControls = new TransformControls(camera, renderer.domElement);
-    // transformControls.attach(target);
     scene.add(transformControls);
-    // const target = new Object3D();
-    // scene.add(target);
 
-    // 初始射线发射器
-    const raycaster = new Raycaster();
-
-    // 绑定鼠标事件
-    const mousePos = new Vector2();
-    let x: number = 0;
-    let y: number = 0;
-    let width: number = 0;
-    let height: number = 0;
-    renderer.domElement.addEventListener('mousemove', (e) => {
-      x = e.offsetX;
-      y = e.offsetY;
-
-      width = renderer.domElement.offsetWidth;
-      height = renderer.domElement.offsetHeight;
-
-      mousePos.x = x / width * 2 - 1;
-      mousePos.y = - y * 2 / height + 1;
-    })
-    renderer.domElement.addEventListener('click', () => {
-      raycaster.setFromCamera(mousePos, camera);
-
-      // 获取与射线相交物体
-      const intersection = raycaster.intersectObjects(scene.children);
-
-      if(intersection?.length) {
-        const object = intersection[0].object;
-        console.log(object);
-        transformControls.attach(object);
-        
-      }
-    })
+    // 事件管理器
+    const eventManager = new TEventManager({
+      camera,
+      scene,
+      dom: renderer.domElement,
+    });
+    // 绑定全局事件
+    eventManager.click = click.bind(this);
 
     // 渲染函数
     const animate = () => {
@@ -119,11 +96,36 @@ export class TEngine {
     this.scene = scene;
     this.camera = camera;
     this.renderer = renderer;
+    this.eventManager = eventManager;
 
   }
   
   // Object3D 为 threejs 的基础类
   addObject(...object: Object3D[]) {
-    object.forEach(ele => this.scene.add(ele))
+    object.forEach(ele => {
+      this.scene.add(ele)
+    })
+  }
+}
+
+
+// 全局点击事件
+function click (intersection: IntersectionProps) {
+  // 清除颜色
+  function changeMultiplyScalar(object: Mesh, scale: number) {
+    (object.material as MeshStandardMaterial).color.multiplyScalar(scale);
+  }
+
+  
+  if(intersection?.length) {
+    const object = intersection[0].object as Mesh;
+    if(object !== cacheObject) {
+      if(cacheObject) changeMultiplyScalar(cacheObject, 0.5);
+      changeMultiplyScalar(object, 2);
+      cacheObject = object;
+    }
+  } else {
+    if(cacheObject) changeMultiplyScalar(cacheObject, 0.5);
+    cacheObject = null;
   }
 }
