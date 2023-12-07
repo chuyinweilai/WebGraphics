@@ -1,5 +1,6 @@
 // 主程序
 import { 
+  Group,
   MOUSE,
   Mesh,
   MeshStandardMaterial,
@@ -64,11 +65,14 @@ export class TEngine {
     }
 
     // 初始变换控制器
+    let transing: boolean = false;
     const transformControls = new TransformControls(camera, renderer.domElement);
     scene.add(transformControls);
+    transformControls.addEventListener("mouseDown", () => {
+      transing = true;
+    });
 
     // 事件管理器
-    let transing: boolean = false;
     const eventManager = new TEventManager({
       camera,
       scene,
@@ -76,9 +80,7 @@ export class TEngine {
     });
     // 鼠标移动
     eventManager.addEventListener('mousemove', (event) => {
-      if(!transing) {
-        transing = true;
-      }
+      
     })
     // 点击事件
     eventManager.addEventListener('click', ({ intersection }: any) => {
@@ -87,10 +89,13 @@ export class TEngine {
         return false;
       }
       if(intersection?.length) {
-        const object = intersection[0].object;
-
+        const object = intersection[0].object as Object3D;
+        if(object.type !== 'Mesh') {
+          scene.remove(transformControls);
+          return;
+        }
         scene.add(transformControls);
-        transformControls.attach(object);
+        transformControls.attach(object.parent instanceof Group ? object.parent: object);
       } else {
         scene.remove(transformControls);
       }
@@ -122,27 +127,5 @@ export class TEngine {
     object.forEach(ele => {
       this.scene.add(ele)
     })
-  }
-}
-
-
-// 全局点击事件
-function click (intersection: IntersectionProps) {
-  // 清除颜色
-  function changeMultiplyScalar(object: Mesh, scale: number) {
-    (object.material as MeshStandardMaterial).color.multiplyScalar(scale);
-  }
-
-  
-  if(intersection?.length) {
-    const object = intersection[0].object as Mesh;
-    if(object !== cacheObject) {
-      if(cacheObject) changeMultiplyScalar(cacheObject, 0.5);
-      changeMultiplyScalar(object, 2);
-      cacheObject = object;
-    }
-  } else {
-    if(cacheObject) changeMultiplyScalar(cacheObject, 0.5);
-    cacheObject = null;
   }
 }

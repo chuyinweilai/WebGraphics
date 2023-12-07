@@ -152,7 +152,8 @@ function onMouseUp ( this: TEventManager ) {
 function onClick( this: TEventManager ) {
   raycaster.setFromCamera(mouse, this.camera);
   // 获取与射线相交物体
-  const intersection = raycaster.intersectObjects(this.scene.children, false);
+  const intersection = raycaster.intersectObjects(this.scene.children, true);
+  console.log(intersection);
   
   // 触发全局事件
   // this.click(intersection, event);

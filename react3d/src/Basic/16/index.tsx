@@ -11,6 +11,7 @@ import * as THelperList from '../../assets/ts/THelper';
 import * as TCodeModel from '../../assets/ts/TCodeModel';
 import { getFemale, getCerberus } from '../../assets/ts/TLoaderModel';
 import './index.css';
+import { groupPromise } from '../../assets/ts/TGroup';
 
 const App = () => {
 	const threeCanvas = useRef(null);
@@ -21,6 +22,9 @@ const App = () => {
 		TE.current.addObject(...Object.values(TLightList));
 		TE.current.addObject(...Object.values(THelperList));
 		TE.current.addObject(...Object.values(TBasicObjectList));
+		groupPromise.then(group => {
+			group && TE.current!.addObject(group);
+		})
 		// TE.current.addObject(...Object.values(TCodeModel));
 		// getFemale().then(group => {
 		// 	group && TE.current!.addObject(group);

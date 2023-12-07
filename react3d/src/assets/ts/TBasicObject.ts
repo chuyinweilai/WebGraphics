@@ -5,7 +5,6 @@ import {
   MeshStandardMaterial,
   PlaneGeometry,
   MeshBasicMaterial,
-  Color,
 } from 'three';
 import { pictureTexture } from './TTextures';
 
