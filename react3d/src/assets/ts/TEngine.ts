@@ -4,11 +4,8 @@ import {
   Mesh,
   MeshStandardMaterial,
   Object3D,
-  Object3DEventMap,
   PerspectiveCamera,
-  Raycaster,
   Scene,
-  Vector2,
   Vector3,
   WebGLRenderer
 } from "three";
@@ -71,13 +68,33 @@ export class TEngine {
     scene.add(transformControls);
 
     // 事件管理器
+    let transing: boolean = false;
     const eventManager = new TEventManager({
       camera,
       scene,
       dom: renderer.domElement,
     });
-    // 绑定全局事件
-    eventManager.click = click.bind(this);
+    // 鼠标移动
+    eventManager.addEventListener('mousemove', (event) => {
+      if(!transing) {
+        transing = true;
+      }
+    })
+    // 点击事件
+    eventManager.addEventListener('click', ({ intersection }: any) => {
+      if(transing) {
+        transing = false;
+        return false;
+      }
+      if(intersection?.length) {
+        const object = intersection[0].object;
+
+        scene.add(transformControls);
+        transformControls.attach(object);
+      } else {
+        scene.remove(transformControls);
+      }
+    })
 
     // 渲染函数
     const animate = () => {

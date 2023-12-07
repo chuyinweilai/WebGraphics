@@ -149,17 +149,17 @@ function onMouseUp ( this: TEventManager ) {
   }
 }
 
-function onClick( this: TEventManager,  event: MouseEvent ) {
+function onClick( this: TEventManager ) {
   raycaster.setFromCamera(mouse, this.camera);
   // 获取与射线相交物体
   const intersection = raycaster.intersectObjects(this.scene.children, false);
   
   // 触发全局事件
-  this.click(intersection, event);
-  // this.dispatchEvent({
-  //   type: 'click',
-  //   intersection
-  // })
+  // this.click(intersection, event);
+  this.dispatchEvent({
+    type: 'click',
+    intersection
+  })
   // 触发对应dom的相关事件
   if(intersection?.length) {
     const object = intersection[0].object;
