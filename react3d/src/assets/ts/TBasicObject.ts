@@ -3,10 +3,7 @@ import {
   Mesh,
   BoxGeometry,
   MeshStandardMaterial,
-  PlaneGeometry,
-  MeshBasicMaterial,
 } from 'three';
-import { pictureTexture } from './TTextures';
 
 // 地面
 const stage: Mesh = new Mesh(
@@ -23,7 +20,7 @@ stage.receiveShadow = true;
 
 // 墙面
 const wall = new Mesh(
-  new BoxGeometry(600, 200, 10),
+  new BoxGeometry(1000, 200, 10),
   new MeshStandardMaterial({
     color: 0xFFFFFF
   })

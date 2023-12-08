@@ -2,6 +2,7 @@
 
 import { Texture, TextureLoader, SRGBColorSpace, CanvasTexture } from "three";
 import { R } from "../img";
+import pictureConfig from './../json/pictures.json';
 import { TCanvasEditor } from "./TCanvasEditor";
 
 
@@ -40,3 +41,40 @@ export const tipsTexture = new CanvasTexture(
   })
   .canvas
 ) 
+
+export const pictureTextureList: Texture[] = [];
+export const tipsTextureList: CanvasTexture[] = [];
+
+const drawCanvas = (author: string, ID: string, date: string) => {
+  return new TCanvasEditor(1920, 1080)
+  .draw((ctx) => {
+    ctx.fillStyle = 'rgba(200, 200, 100)';
+    ctx.beginPath();
+    ctx.fillRect(0, 0, 1920, 1080);
+    ctx.closePath();
+
+    ctx.fillStyle = 'black';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = '72px 微软雅黑';
+    ctx.translate(960, 400);
+
+    ctx.beginPath();
+    ctx.fillText(`作者: ${author}`, 0, 0);
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.fillText(`ID: ${ID}`, 0, 100);
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.fillText(`时间: ${date}`, 0, 200);
+    ctx.closePath();
+  })
+  .canvas
+  
+}
+pictureConfig.forEach(({ url, author, ID, date }) => {
+  pictureTextureList.push(textureLoader.load(url));
+  tipsTextureList.push(new CanvasTexture(drawCanvas(author, ID, date)))
+});
