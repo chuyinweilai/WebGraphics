@@ -59,7 +59,7 @@ export class TEngine {
     const orbitControls = new OrbitControls(camera, renderer.domElement);
     // orbitControls.autoRotate = true;
     orbitControls.mouseButtons = {
-      'LEFT': null,
+      'LEFT': MOUSE.RIGHT,
       'MIDDLE': MOUSE.DOLLY,
       'RIGHT': MOUSE.ROTATE,
     }
